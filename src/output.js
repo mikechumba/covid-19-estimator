@@ -1,63 +1,63 @@
+import covid19ImpactEstimator from './estimator.js';
 
-
-export default class Impact {
-
-    constructor(data) {
-        this.data = data;
+class Data {
+    region = {
+        name: 'Africa',
+        avgAge: 19.7,
+        avgDailyIncomeInUSD: 4,
+        avgDailyIncomePopulation: 0.71
     }
 
-    get impact() {
-        return this.calculateImpact(10);
+    constructor(periodType, timeToElapse, reportedCases, totalHospitalBeds) {
+        this.periodType = periodType;
+        this.timeToElapse = timeToElapse;
+        this.reportedCases = reportedCases;
+        this.totalHospitalBeds = totalHospitalBeds;
     }
+};
 
-    get severeImpact() {
-        return this.calculateImpact(50);
-    }
+const submitBtn = document.querySelector('#submitBtn');
 
-    calculateImpact(x) {
-        const { reportedCases, periodType, timeToElapse, totalHospitalBeds } = this.data;
-        const days = this.getDays(timeToElapse, periodType);
-        const currentlyInfected = reportedCases * x;
-        const setsOfThree = Math.floor(days/3);
-        const infectionsByRequestedTime = currentlyInfected * (2 ** setsOfThree);
-        const severeCasesByRequestedTime = Math.floor(currentlyInfected * 0.15)
-        const hospitalBedsByRequestedTime = totalHospitalBeds - this.availableHospitalBeds();
-        return {
-            currentlyInfected: currentlyInfected,
-            infectionsByRequestedTime: infectionsByRequestedTime,
-            severeCasesByRequestedTime: severeCasesByRequestedTime,
-            hospitalBedsByRequestedTime: hospitalBedsByRequestedTime,
-            casesForICUByRequestedTime: this.casesForICUByRequestedTime(infectionsByRequestedTime),
-            casesForVentilatorsByRequestedTime: this.casesForVentilatorsByRequestedTime(infectionsByRequestedTime),
-            dollarsInFlight: this.dollarsInFlight(infectionsByRequestedTime, days)
-        }
-    }
+function serialize(nodes) {
 
-    availableHospitalBeds() {
-        const { availableHospitalBeds } = this.data;
-        return Math.floor(availableHospitalBeds * 0.35);
-    }
-
-    casesForICUByRequestedTime(infectionsByRequestedTime) {
-        return infectionsByRequestedTime * 0.05;
-    }
-
-    casesForVentilatorsByRequestedTime(infectionsByRequestedTime) {
-        return infectionsByRequestedTime * 0.02;
-    }
-
-    dollarsInFlight(infectionsByRequestedTime, timeToElapse) {
-        const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = this.data.region;
-        return infectionsByRequestedTime * avgDailyIncomeInUSD * avgDailyIncomePopulation * timeToElapse
-    }
-
-    getDays(time, periodType) {
-        if (periodType === 'days') {
-            return time;
-        } else if (periodType === 'weeks') {
-            return time * 7;
-        } else if (periodType === 'months') {
-            return time * 30;
-        }
+    return {
+        periodType: nodes[4].dataset.periodType,
+        timeToElapse: nodes[1].dataset.timeToElapse,
+        reportedCases: nodes[2].dataset.reportedCases,
+        population: nodes[0].dataset.population,
+        totalHospitalBeds: nodes[3].dataset.totalHospitalBeds
     }
 }
+
+submitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const data = {
+        region: {
+            name: 'Africa',
+            avgAge: 19.7,
+            avgDailyIncomeInUSD: 4,
+            avgDailyIncomePopulation: 0.71
+        },
+        periodType: 'days',
+        timeToElapse: 38,
+        reportedCases: 2747,
+        population: 92931687,
+        totalHospitalBeds: 678874
+    };
+
+    const inputNodes = document.querySelectorAll('.form-control');
+
+    const formData = serialize(inputNodes);
+    console.log('FORM DATA', formData);
+
+    const output = covid19ImpactEstimator(data);
+});
+
+document.addEventListener('change', (e) => {
+    e.preventDefault();
+
+    e.target.dataset[e.target.name] = e.target.value
+})
+
+
