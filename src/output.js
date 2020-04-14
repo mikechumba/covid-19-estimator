@@ -14,11 +14,11 @@ const submitBtn = document.querySelector('#submitBtn');
 function serialize(nodes) {
 
     return {
-        periodType: nodes[4].dataset.periodType,
-        timeToElapse: nodes[3].dataset.timeToElapse,
-        reportedCases: nodes[2].dataset.reportedCases,
-        population: nodes[0].dataset.population,
-        totalHospitalBeds: nodes[1].dataset.totalHospitalBeds
+        periodType: Number(nodes[4].dataset.periodType),
+        timeToElapse: Number(nodes[3].dataset.timeToElapse),
+        reportedCases: Number(nodes[2].dataset.reportedCases),
+        population: Number(nodes[0].dataset.population),
+        totalHospitalBeds: Number(nodes[1].dataset.totalHospitalBeds)
     }
 }
 
@@ -38,8 +38,20 @@ submitBtn.addEventListener('click', (e) => {
 
     if (validEntries.length === 5) {
         const output = covid19ImpactEstimator(data);
+        textToClipboard(JSON.stringify(output));
     }
 });
+
+function textToClipboard(text) {
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+
+    alert('Estimates copied to clipboard.')
+}
 
 document.addEventListener('change', (e) => {
     e.preventDefault();
