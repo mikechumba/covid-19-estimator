@@ -15,8 +15,7 @@ class Impact {
     const {
       reportedCases,
       periodType,
-      timeToElapse,
-      totalHospitalBeds
+      timeToElapse
     } = this.data;
     const days = this.getDays(timeToElapse, periodType);
     const currentlyInfected = reportedCases * x;
@@ -27,10 +26,10 @@ class Impact {
       this.availableHospitalBeds() - severeCasesByRequestedTime
     );
     return {
-      currentlyInfected: currentlyInfected,
-      infectionsByRequestedTime: infectionsByRequestedTime,
-      severeCasesByRequestedTime: severeCasesByRequestedTime,
-      hospitalBedsByRequestedTime: hospitalBedsByRequestedTime,
+      currentlyInfected,
+      infectionsByRequestedTime,
+      severeCasesByRequestedTime,
+      hospitalBedsByRequestedTime,
       casesForICUByRequestedTime: this.casesForICUByRequestedTime(
         infectionsByRequestedTime
       ),
