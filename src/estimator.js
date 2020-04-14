@@ -64,13 +64,13 @@ class Impact {
   }
 
   getDays(time, periodType) {
-    if (periodType === 'days') {
-      return time;
-    } else if (periodType === 'weeks') {
+    if (periodType === 'weeks') {
       return time * 7;
     } else if (periodType === 'months') {
       return time * 30;
     }
+
+    return time;
   }
 }
 

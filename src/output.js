@@ -47,8 +47,6 @@ function textToClipboard(text) {
   dummy.select();
   document.execCommand('copy');
   document.body.removeChild(dummy);
-
-  alert('Estimates copied to clipboard.');
 }
 
 document.addEventListener('change', (e) => {
