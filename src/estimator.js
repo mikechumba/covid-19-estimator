@@ -12,11 +12,7 @@ class Impact {
   }
 
   calculateImpact(x) {
-    const {
-      reportedCases,
-      periodType,
-      timeToElapse
-    } = this.data;
+    const { reportedCases } = this.data;
     const days = this.getDays();
     const currentlyInfected = reportedCases * x;
     const setsOfThree = Math.floor(days / 3);
@@ -56,10 +52,10 @@ class Impact {
   dollarsInFlight(infectionsByRequestedTime, timeToElapse) {
     const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = this.data.region;
     return (
-      infectionsByRequestedTime
-      * avgDailyIncomeInUSD
-      * avgDailyIncomePopulation 
-      * timeToElapse
+      infectionsByRequestedTime *
+      avgDailyIncomeInUSD *
+      avgDailyIncomePopulation *
+      timeToElapse
     );
   }
 
