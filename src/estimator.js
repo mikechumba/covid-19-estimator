@@ -17,7 +17,7 @@ class Impact {
       periodType,
       timeToElapse
     } = this.data;
-    const days = this.getDays(timeToElapse, periodType);
+    const days = this.getDays();
     const currentlyInfected = reportedCases * x;
     const setsOfThree = Math.floor(days / 3);
     const infectionsByRequestedTime = currentlyInfected * 2 ** setsOfThree;
@@ -56,14 +56,15 @@ class Impact {
   dollarsInFlight(infectionsByRequestedTime, timeToElapse) {
     const { avgDailyIncomeInUSD, avgDailyIncomePopulation } = this.data.region;
     return (
-      infectionsByRequestedTime *
-      avgDailyIncomeInUSD *
-      avgDailyIncomePopulation *
-      timeToElapse
+      infectionsByRequestedTime
+      * avgDailyIncomeInUSD
+      * avgDailyIncomePopulation 
+      * timeToElapse
     );
   }
 
-  getDays(time, periodType) {
+  getDays() {
+    const { time, periodType } = this.data;
     if (periodType === 'weeks') {
       return time * 7;
     } else if (periodType === 'months') {
