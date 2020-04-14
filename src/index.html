@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/styles.min.css">
+    <link rel="modulepreload" href="./estimator.js">
+    <title>COVID-19 Estimator</title>
+</head>
+<body>
+    
+    <div class="page">
+
+        <div class="title">
+            <h1>Covid19<br>Estimator</h1>
+        </div>
+
+        <div class="form">
+
+            <form action="" id="estimator-form">
+                <div class="form-group">
+                    <label class="custom-label" for="">Population</label>
+                    <input type="number" name="population" data-population aria-label="populationlabel" class="form-control control" placeholder="Population" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label class="custom-label" for="">Total Hospitals Beds</label>
+                    <input type="number" name="totalHospitalBeds" data-total-hospital-beds class="form-control control" placeholder="Total Hospital Beds">
+                </div>
+                <div class="form-group">
+                    <label class="custom-label" for="">Reported Cases</label>
+                    <input type="number" name="reportedCases" data-reported-cases class="form-control control" placeholder="Reported Cases">
+                </div>
+                <div class="form-group">
+                    <label class="custom-label" for="">Time To Elapse</label>
+                    <div class="input-group">
+                        <input type="number" name="timeToElapse" data-time-to-elapse class="form-control control" placeholder="Time to Elapse">
+                        <select name="periodType" data-period-type="days" class="input-group-append control">
+                            <option value="days" selected>Days</option>
+                            <option value="weeks">Weeks</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" id="submitBtn" data-go-estimate>Get Estimate</button>
+                </div>
+                <!-- <div class="form-group">
+                    <button class="btn btn-secondary" id="">Copy JSON Output</button>
+                </div> -->
+            </form>
+    
+        </div>
+
+    </div>
+
+    <script type="module" src="./output.js"></script>
+</body>
+</html>
