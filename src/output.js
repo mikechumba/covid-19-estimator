@@ -1,18 +1,11 @@
 import covid19ImpactEstimator from './estimator.js';
 
-class Data {
-    region = {
+const regionData = {
+    region: {
         name: 'Africa',
         avgAge: 19.7,
         avgDailyIncomeInUSD: 4,
         avgDailyIncomePopulation: 0.71
-    }
-
-    constructor(periodType, timeToElapse, reportedCases, totalHospitalBeds) {
-        this.periodType = periodType;
-        this.timeToElapse = timeToElapse;
-        this.reportedCases = reportedCases;
-        this.totalHospitalBeds = totalHospitalBeds;
     }
 };
 
@@ -22,36 +15,30 @@ function serialize(nodes) {
 
     return {
         periodType: nodes[4].dataset.periodType,
-        timeToElapse: nodes[1].dataset.timeToElapse,
+        timeToElapse: nodes[3].dataset.timeToElapse,
         reportedCases: nodes[2].dataset.reportedCases,
         population: nodes[0].dataset.population,
-        totalHospitalBeds: nodes[3].dataset.totalHospitalBeds
+        totalHospitalBeds: nodes[1].dataset.totalHospitalBeds
     }
 }
 
 submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
 
-    const data = {
-        region: {
-            name: 'Africa',
-            avgAge: 19.7,
-            avgDailyIncomeInUSD: 4,
-            avgDailyIncomePopulation: 0.71
-        },
-        periodType: 'days',
-        timeToElapse: 38,
-        reportedCases: 2747,
-        population: 92931687,
-        totalHospitalBeds: 678874
-    };
-
-    const inputNodes = document.querySelectorAll('.form-control');
+    const inputNodes = document.querySelectorAll('.control');
 
     const formData = serialize(inputNodes);
-    console.log('FORM DATA', formData);
 
-    const output = covid19ImpactEstimator(data);
+    const validEntries = Object.entries(formData).filter(entry => {
+
+        return entry[1];
+    })
+    
+    const data = { ...regionData, ...formData }
+
+    if (validEntries.length === 5) {
+        const output = covid19ImpactEstimator(data);
+    }
 });
 
 document.addEventListener('change', (e) => {
