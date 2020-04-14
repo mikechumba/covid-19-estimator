@@ -21,6 +21,15 @@ function serialize(nodes) {
   };
 }
 
+function textToClipboard(text) {
+    var dummy = document.createElement('textarea');
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand('copy');
+    document.body.removeChild(dummy);
+  }
+
 submitBtn.addEventListener('click', (e) => {
   e.preventDefault();
 
@@ -39,15 +48,6 @@ submitBtn.addEventListener('click', (e) => {
     textToClipboard(JSON.stringify(output));
   }
 });
-
-function textToClipboard(text) {
-  var dummy = document.createElement('textarea');
-  document.body.appendChild(dummy);
-  dummy.value = text;
-  dummy.select();
-  document.execCommand('copy');
-  document.body.removeChild(dummy);
-}
 
 document.addEventListener('change', (e) => {
   e.preventDefault();
